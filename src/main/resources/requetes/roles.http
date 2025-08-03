@@ -1,0 +1,9 @@
+POST http://localhost:8181/api/roles
+Content-Type: application/json
+
+{
+  "libelle": "CONTRIBUABLE",
+  "description": "profil public"
+}
+
+###
