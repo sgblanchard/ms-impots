@@ -7,7 +7,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ProfilService {
     private ProfilRepository profilRepository;
-    void creer(Profil profil) {
-        this.profilRepository.save(profil);
+    public Profil creer(Profil profil) {
+        return this.profilRepository.save(profil);
+    }
+
+    public Profil findByEmail(String email) {
+        return profilRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new RuntimeException(String.format("Email %s inconnu", email)));
     }
 }
