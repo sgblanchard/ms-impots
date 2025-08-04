@@ -1,5 +1,6 @@
 package cd.dgi.di.comptes;
 
+import cd.dgi.di.notifications.EmailService;
 import cd.dgi.di.profiles.Profil;
 import cd.dgi.di.profiles.ProfilService;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ public class CompteService {
     private final CodeRepository codeRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final ProfilService profilService;
+    private final EmailService emailService;
 
     @Transactional
     public void inscription(Compte compte) {
@@ -31,12 +33,10 @@ public class CompteService {
                 .nom(compte.nom())
                 .prenom(compte.prenom())
                 .build();
-        Profil profil1 = profilService.creer(profil);
-        if(profil1 == null) {
-            throw new IllegalStateException("Erreur de creation de profil");
-        }
-        Code codeEnregistre = codeRepository.save(code);
+        profil = profilService.creer(profil);
 
+        Code codeEnregistre = codeRepository.save(code);
+        this.emailService.send(profil, codeEnregistre);
     }
 
     @Transactional

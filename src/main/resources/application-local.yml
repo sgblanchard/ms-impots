@@ -6,5 +6,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
-
+providers:
+  mails:
+    endpoint: https://mails.dev.chillo.fr
 
