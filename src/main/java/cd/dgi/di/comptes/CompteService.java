@@ -1,8 +1,7 @@
 package cd.dgi.di.comptes;
 
 import cd.dgi.di.notifications.EmailService;
-import cd.dgi.di.profiles.Profil;
-import cd.dgi.di.profiles.ProfilService;
+import cd.dgi.di.profiles.*;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -19,21 +19,26 @@ public class CompteService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final ProfilService profilService;
     private final EmailService emailService;
+    private final RoleService roleService;
 
     @Transactional
     public void inscription(Compte compte) {
-        String encoded = this.passwordEncoder.encode(compte.motDePasse());
-        Code code = new  Code();
-        code.setEmail(compte.email());
 
+        // role
+        Role role = this.roleService.getByLibelle(RoleLibelle.CONTRIBUABLE);
+        String encoded = this.passwordEncoder.encode(compte.motDePasse());
         Profil profil = Profil.builder()
                 .motDePasse(encoded)
                 .email(compte.email())
                 .telephone(compte.telephone())
                 .nom(compte.nom())
                 .prenom(compte.prenom())
+                .roles(Set.of(role))
                 .build();
         profil = profilService.creer(profil);
+
+        Code code = new  Code();
+        code.setProfil(profil);
 
         Code codeEnregistre = codeRepository.save(code);
         this.emailService.send(profil, codeEnregistre);
@@ -49,7 +54,9 @@ public class CompteService {
         Code code = optionalCodeByValeur.get();
         if (!code.estValide()) {}
 
-        Profil profil = this.profilService.findByEmail(code.getEmail());
+        Profil profil = this.profilService.findByEmail(
+                code.getProfil().getEmail()
+        );
         profil.setActif(true);
 
         code.setDateExpiration(Instant.now());

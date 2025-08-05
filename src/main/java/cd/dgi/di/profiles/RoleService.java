@@ -1,9 +1,11 @@
 package cd.dgi.di.profiles;
 
+import cd.dgi.di.notifications.DataClient;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,10 +14,12 @@ public class RoleService {
     private final static Logger LOGGER = Logger.getLogger(RoleService.class.getName());
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final DataClient dataClient;
 
-    public RoleService(RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+    public RoleService(RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder, DataClient dataClient) {
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.dataClient = dataClient;
     }
 
     public void creer(Role role) {
@@ -38,7 +42,21 @@ public class RoleService {
     }
 
 
-    public List<Role> rechercher() {
+    public List<Role> recherchexxr() {
        return this.roleRepository.findAll();
+    }
+
+    public Role getByLibelle(RoleLibelle roleLibelle) {
+        Optional<Role> optionalRole = this.roleRepository.findByLibelle(roleLibelle);
+        if(optionalRole.isEmpty()) {
+            Role roleToSave = this.dataClient.roles()
+                    .stream()
+                    .filter(role -> role.getLibelle().equals(roleLibelle))
+                    .findFirst()
+                    .get();
+            return this.roleRepository.save(roleToSave);
+        } else {
+            return optionalRole.get();
+        }
     }
 }

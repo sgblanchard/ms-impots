@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Builder
@@ -23,4 +25,12 @@ public class Profil {
     private String telephone;
     private boolean actif = false;
     private String motDePasse;
+
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @JoinTable(
+            name = "profils_roles",
+            joinColumns = @JoinColumn( name = "profils_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id")
+    )
+    private Set<Role> roles;
 }

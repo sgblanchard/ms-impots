@@ -1,5 +1,6 @@
 package cd.dgi.di.comptes;
 
+import cd.dgi.di.profiles.Profil;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,8 +18,13 @@ public class Code {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int valeur;
-    private String email;
     private Instant dateExpiration;
+    @ManyToOne(cascade = {
+            CascadeType.MERGE,
+            CascadeType.DETACH
+    })
+    @JoinColumn(name = "profiles_id")
+    private Profil profil;
     public Code() {
         Random random = new Random();
         this.valeur = 100000 + random.nextInt(900000);

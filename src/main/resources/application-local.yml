@@ -7,6 +7,8 @@ spring:
     hibernate:
       ddl-auto: create-drop
 providers:
+  data:
+    endpoint: http://localhost:8000
   mails:
     endpoint: https://mails.dev.chillo.fr
 
