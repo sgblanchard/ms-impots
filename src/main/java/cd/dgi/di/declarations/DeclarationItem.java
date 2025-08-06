@@ -1,28 +1,23 @@
-package cd.dgi.di.profiles;
+package cd.dgi.di.declarations;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
-@Getter
 @Setter
+@Getter
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "declarations_items")
+public class DeclarationItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "name")
-    @Enumerated(EnumType.STRING)
-    private RoleLibelle libelle;
+    private String type;
+    private double valeur;
     private String description;
-
-    public Role() {
-    }
-
+    private double impotCalcule;
 }

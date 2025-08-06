@@ -1,4 +1,8 @@
 spring:
+  http:
+    client:
+      connect-timeout: 300s
+      read-timeout: 120s
   datasource:
     url: jdbc:sqlserver://5.135.244.239:1433;databaseName=ms-declaration-impots;encrypt=false
     username: sa
@@ -8,7 +12,13 @@ spring:
       ddl-auto: create-drop
 providers:
   data:
-    endpoint: http://localhost:8000
+    endpoint: http://localhost:3200
   mails:
     endpoint: https://mails.dev.chillo.fr
-
+logging:
+  level:
+    org:
+      springframework:
+        security: trace
+        web:
+          client: trace

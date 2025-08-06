@@ -5,3 +5,7 @@ server:
   servlet:
     context-path: /api
   port: 8181
+
+rsa:
+  private-key: classpath:certs/private.pem
+  public-key: classpath:certs/public.pem

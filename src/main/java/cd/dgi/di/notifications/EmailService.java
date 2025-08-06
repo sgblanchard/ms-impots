@@ -16,7 +16,7 @@ public class EmailService {
 
     public void send(Profil profil, Code code) {
        Map<String, Object> parameters = Map.of(
-                "To", List.of(Map.of("Name", profil.getPrenom(), "Email", code.getEmail())),
+                "To", List.of(Map.of("Name", profil.getPrenom(), "Email", code.getProfil().getEmail())),
                 "From", Map.of("Name", "Service des impots", "Email", "no-reply@impots.cd"),
                 "Subject", String.format("Votre code d'activation de %s", code.getValeur()),
                 "Text", String.format("Votre code d'activation de %s", code.getValeur()),

@@ -22,5 +22,14 @@ POST http://localhost:8181/api/activation
 Content-Type: application/json
 
 {
-  "code": "704309"
+  "code": "764898"
+}
+
+### Connexion
+POST http://localhost:8181/api/connexion
+Content-Type: application/json
+
+{
+  "password": "chillo.tech",
+  "username": "achille.mbougueng@chillo.tech"
 }
