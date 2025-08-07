@@ -2,7 +2,6 @@ package cd.dgi.di.comptes;
 
 import cd.dgi.di.profiles.Profil;
 import cd.dgi.di.profiles.ProfilRepository;
-import cd.dgi.di.profiles.ProfilService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.jwt.Jwt;

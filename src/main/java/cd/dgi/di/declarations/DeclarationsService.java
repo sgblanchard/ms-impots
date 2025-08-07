@@ -3,15 +3,9 @@ package cd.dgi.di.declarations;
 import cd.dgi.di.comptes.SecuriteService;
 import cd.dgi.di.profiles.Profil;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -19,8 +13,9 @@ import java.util.Set;
 public class DeclarationsService {
     private SecuriteService securiteService;
     private DeclarationRepository declarationRepository;
-    public List<Object> rechercher() {
-        return new ArrayList<>();
+    public Set<Declaration> rechercher() {
+        Profil profil = this.securiteService.profilConnecte();
+        return profil.getDeclarations();
     }
 
     @Transactional

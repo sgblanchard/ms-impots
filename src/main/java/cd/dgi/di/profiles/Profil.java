@@ -9,10 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 @Setter
@@ -47,7 +44,7 @@ public class Profil implements UserDetails {
             joinColumns = @JoinColumn( name = "profils_id"),
             inverseJoinColumns = @JoinColumn(name = "declarations_id")
     )
-    private Set<Declaration> declarations;
+    private Set<Declaration> declarations = new HashSet<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -24,7 +24,7 @@ public class Declaration {
     private Instant creation;
     private double impotTotal;
     private String statut;
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     @JoinTable(
             name = "declarations_declarations_items",
             joinColumns = @JoinColumn( name = "declarations_id"),

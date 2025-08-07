@@ -9,7 +9,7 @@ spring:
     password: YourStrong!Passw0rd
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 providers:
   data:
     endpoint: http://localhost:3200
