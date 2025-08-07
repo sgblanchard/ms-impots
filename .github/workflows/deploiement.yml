@@ -8,7 +8,7 @@ jobs:
     steps:
     - run: echo "Deploiement projet"
   build-project:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Cloner le projet
         uses: actions/checkout@v4
